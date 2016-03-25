@@ -1,0 +1,27 @@
+#include "stdafx.h"
+#include <string>
+#include <algorithm>
+#include <iostream>
+
+#include "Vec.h"
+#include "Vec2d.h"
+#include "Vectors.h"
+#include "Lock.h"
+#include "ThreadManager.h"
+#include "ThreadSafeQueue.h"
+#include "Pack.h"
+#include "ustring.h"
+#include "CpuTimer.h"
+#include "Model.h"
+#include "ParseXFile.h"
+#include "Scene.h"
+#include "BmpImage.h"
+#include "DataReader.h"
+#include "ModelData.h"
+#include "ProgressUpdater.h"
+#include "FileIO.h"
+#include "HttpClient.h"
+#include "ImageParsing.h"
+#include "Compression.h"
+#include "Exceptions.h"
+#include "Logger.h"
