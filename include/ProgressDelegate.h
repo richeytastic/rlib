@@ -19,6 +19,13 @@
 #include <iostream>
 #include <string>
 
+/*
+#ifdef _WIN32
+class rlib_EXPORT boost::mutex;
+template class rlib_EXPORT boost::unordered_map<unsigned long, float>;
+#endif
+*/
+
 namespace rlib
 {
 

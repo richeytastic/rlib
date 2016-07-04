@@ -14,7 +14,6 @@ bool rlib::asBool( const std::string& str)
 }   // end asBool
 
 
-
 bool rlib::asBool( std::istream& is)
 {
     std::string str;

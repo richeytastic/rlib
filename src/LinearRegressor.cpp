@@ -2,11 +2,9 @@
 using rlib::LinearRegressor;
 #include <cmath>
 #include <iostream>
-using std::cerr;
-using std::endl;
 
 
-LinearRegressor::LinearRegressor( const vector<float> &vals)
+LinearRegressor::LinearRegressor( const std::vector<float> &vals)
     : M( vals.size()), sumy(0.0), sumx(0.0), dotxy(0.0), sumxsq(0.0)
 {
     for ( size_t i = 0; i < M; ++i)
@@ -66,7 +64,7 @@ double LinearRegressor::calcSmoothedLine()
 
 
 
-vector<float> LinearRegressor::getLine() const
+std::vector<float> LinearRegressor::getLine() const
 {
     if ( outy.size() >= 2)
         return outy;
@@ -100,14 +98,14 @@ void LinearRegressor::calcLineParams()
 {
     slope = (M * dotxy - sumx * sumy) / (M * sumxsq - sumx * sumx);
     intercept = 1.0/M * (sumy - slope * sumx);
-    //cerr << "f(x) = " << slope << "x + " << intercept << endl;
+    //std::cerr << "f(x) = " << slope << "x + " << intercept << std::endl;
 }   // end calcLineParams
 
 
 
 void LinearRegressor::removeOutliers()
 {
-    vector<double> d;
+    std::vector<double> d;
     double sum_sq_d = 0.0;
 
     for ( size_t i = 0; i < M; ++i)
@@ -120,8 +118,8 @@ void LinearRegressor::removeOutliers()
 
     // Remove all data points corresponding to the difference value in d being greater than 1
     // standard error and adjust the parameters required to calculate the slope and intercept
-    vector<float> y2;
-    vector<float> x2;
+    std::vector<float> y2;
+    std::vector<float> x2;
     size_t M2 = 0;
     for ( size_t i = 0; i < M; ++i)
     {

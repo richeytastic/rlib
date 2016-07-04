@@ -50,7 +50,7 @@ long double rlib::unpack754( long long i, unsigned bits, unsigned expbits)
 	if (i == 0) return 0.0;
 
 	// pull the significand
-	result = (i&((1LL<<significandbits)-1)); // mask
+    result = (long double)(i&((1LL<<significandbits)-1)); // mask
 	result /= (1LL<<significandbits); // convert back to float
 	result += 1.0f; // add the one back on
 
@@ -71,7 +71,7 @@ long double rlib::unpack754( long long i, unsigned bits, unsigned expbits)
 void rlib::packi16( unsigned char *buf, uint16_t i)
 {
 	*buf++ = i>>8;
-	*buf = i;
+    *buf = (unsigned char)i;
 }	// end packi16
 
 
@@ -147,8 +147,8 @@ size_t rlib::pack_buffer( unsigned char *buf, const char *form, ...)
 			case 'f': // float
 			{
 				i++;
-				float f = va_arg( ap, double); // promoted
-				uint32_t l = pack754_32( f); // convert to IEEE 754
+                float f = (float)va_arg( ap, double); // promoted
+                uint32_t l = (uint32_t)pack754_32( f); // convert to IEEE 754
 				packi32( buf + size, l);
 				size += 4;
 				break;
@@ -157,7 +157,7 @@ size_t rlib::pack_buffer( unsigned char *buf, const char *form, ...)
 			{
 				i++;
 				char *s = va_arg( ap, char*);
-				uint16_t len = strlen( s);
+                uint16_t len = (uint16_t)strlen( s);
 				packi16( buf + size, len);
 				size += 2;
 				memcpy( buf + size, s, len);
@@ -170,7 +170,7 @@ size_t rlib::pack_buffer( unsigned char *buf, const char *form, ...)
 				unsigned char *u = va_arg( ap, unsigned char*);
 
 				// Get the length of the uchar string from the format string
-				uint16_t len = strtol( format + i, NULL, 10); // Get the number of bytes that need to be read in from the unsigned char pointer
+                uint16_t len = (uint16_t)strtol( format + i, NULL, 10); // Get the number of bytes that need to be read in from the unsigned char pointer
 				packi16( buf + size, len);	// Pack length into the buffer
 				size += 2;
 
@@ -248,7 +248,7 @@ void rlib::unpack_buffer( const unsigned char *buf, const char *form, ...)
 				f = va_arg( ap, float*);
 				pf = unpacki32( buf + offset);
 				offset += 4;
-				*f = unpack754_32( pf);
+                *f = (float)unpack754_32( pf);
 				break;
 			case 's': // string
 				i++;

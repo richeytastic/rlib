@@ -2,7 +2,6 @@
 #ifndef RLIB_SYMMETRIC_MATRIX_H
 #define RLIB_SYMMETRIC_MATRIX_H
 
-#include "rlib_Export.h"
 typedef unsigned int uint;
 #include <ostream>
 using std::ostream;
@@ -12,7 +11,7 @@ namespace rlib
 {
 
 template <typename T>
-class rlib_EXPORT SymmetricMatrix
+class SymmetricMatrix
 {
 public:
     SymmetricMatrix( size_t sz, size_t width=3);

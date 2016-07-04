@@ -30,7 +30,11 @@ void ProgressDelegate::doUpdateProgress( float propComp)
     // Get this thread's ID
     const std::string stid = boost::lexical_cast<std::string>( boost::this_thread::get_id());
     unsigned long tid;
+#ifdef _WIN32   // Avoid compiler warning (sscanf_s only more secure when passing in strings - need to supply buffer length too)
+    sscanf_s( stid.c_str(), "%lx", &tid);
+#else
     sscanf( stid.c_str(), "%lx", &tid);
+#endif
 
     _threadProps[tid] = propComp;
     // Calculate the mean proportion complete across threads

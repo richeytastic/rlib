@@ -12,7 +12,7 @@ ustring::ustring() : bs( NULL), len( 0)
 }	// end ustring ctor
 
 
-ustring::ustring( const char *str) : bs( NULL), len( strlen( str))
+ustring::ustring( const char *str) : bs( NULL), len( (uint)strlen( str))
 {
 	bs = new basic_string< uchar>( (const uchar*)str);
 }	// end ustring ctor
@@ -30,7 +30,7 @@ ustring::ustring( const uchar *buff, uint ln) : bs( NULL), len( ln)
 }	// end ustring ctor
 
 
-ustring::ustring( const string &s) : bs( NULL), len( s.length())
+ustring::ustring( const string &s) : bs( NULL), len( (uint)s.length())
 {
 	bs = new basic_string< uchar>( (const uchar*)s.data(), len);
 }	// end ustring ctor
@@ -85,12 +85,16 @@ void ustring::reserve( uint sz)
 
 string ustring::to_hex() const
 {
-	char *hx = (char*)malloc( 2 * len);
-	for ( uint i = 0; i < len; ++i)
-		sprintf( hx + 2*i, "%02x", bs->data()[ i]);
-    
-    free(hx);
-	return string( hx, 2 * len);
+    string hx;
+    hx.resize(2*len);
+    char chx[2];
+    for ( uint i = 0; i < len; ++i)
+    {
+        snprintf( chx, 2, "%02x", bs->data()[ i]);
+        hx.at(2*i) = chx[0];
+        hx.at(2*i+1) = chx[1];
+    }   // end for
+    return hx;
 }	// end to_hex
 
 

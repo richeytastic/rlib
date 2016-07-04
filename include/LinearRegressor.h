@@ -4,8 +4,19 @@
 
 #include "rlib_Export.h"
 #include <vector>
-using std::vector;
 #include <sys/types.h>
+
+/*
+#ifdef _WIN32
+struct rlib_EXPORT std::_Container_base12;
+template struct rlib_EXPORT std::_Simple_types<float>;
+template class rlib_EXPORT std::_Vector_val<std::_Simple_types<float> >;
+template class rlib_EXPORT std::allocator<float>;
+template struct rlib_EXPORT std::_Wrap_alloc<std::allocator<float> >;
+template class rlib_EXPORT std::_Compressed_pair<std::_Wrap_alloc<std::allocator<float> >, std::_Vector_val<std::_Simple_types<float> >, true>;
+template class rlib_EXPORT std::vector<float>;
+#endif
+*/
 
 
 namespace rlib
@@ -17,7 +28,7 @@ public:
     /**
      * Create a new linear regressor with the provided vector of values.
      */
-    LinearRegressor( const vector<float> &vals);
+    LinearRegressor( const std::vector<float> &vals);
 
     /**
      * Calculate the best fit line returning the coefficient of determination
@@ -29,7 +40,7 @@ public:
      * Return the smoothed line if calcSmoothedLine has been called,
      * otherwise returns a copy of the original line.
      */
-    vector<float> getLine() const;
+    std::vector<float> getLine() const;
 
     /**
      * Returns the smoothed start point of the line if calcSmoothedLine
@@ -50,14 +61,14 @@ private:
     double dotxy;
     double sumxsq;
 
-    vector<float> inity;// Saved original
-    vector<float> y;    // Adjusted
-    vector<float> x;
+    std::vector<float> inity;// Saved original
+    std::vector<float> y;    // Adjusted
+    std::vector<float> x;
 
     double slope;
     double intercept;
 
-    vector<float> outy;
+    std::vector<float> outy;
 
     void calcLineParams();
 

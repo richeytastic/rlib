@@ -12,25 +12,20 @@ include_directories( "${INCLUDE_DIR}")
 include_directories( "${PROJECT_BINARY_DIR}")
 
 # Eigen3
-if(WIN32)
-    set( EIGEN3_INCLUDE_DIR "${LOCALLIBS}/eigen3")
-endif(WIN32)
 find_package( Eigen3 3.1.2 REQUIRED)
 include_directories( ${EIGEN3_INCLUDE_DIR})
 
 # Boost
-if(WIN32)
-    set( BOOST_ROOT "D:/boost_1_56_0")
-    set( BOOST_LIBRARYDIR "${BOOST_ROOT}/lib64-msvc-11.0")
-endif(WIN32)
-find_package( Boost 1.5 REQUIRED COMPONENTS filesystem system thread random regex)
+find_package( Boost 1.58 REQUIRED COMPONENTS system filesystem thread random regex)
 include_directories( ${Boost_INCLUDE_DIRS})
-link_directories( ${Boost_LIBRARY_DIR})
-
+message( STATUS "Boost_LIBRARY_DIR=${Boost_LIBRARY_DIR}")
+message( STATUS "Boost_LIBRARIES=${Boost_LIBRARIES}")
+add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
 
 set( INCLUDE_FILES
     "${INCLUDE_DIR}/ConvexOptimiser.h"
     "${INCLUDE_DIR}/Convert.h"
+    "${INCLUDE_DIR}/template/Convert_template.h"
     "${INCLUDE_DIR}/CmdLine.h"
     "${INCLUDE_DIR}/CpuTimer.h"
     "${INCLUDE_DIR}/Exceptions.h"

@@ -9,7 +9,7 @@ static const int BYTE_SZ = 8;
 SymmetricBitSet::SymmetricBitSet( size_t s)
     : sz( s), buffer(NULL)
 {
-    int bsz = byteSize();
+    int bsz = (int)byteSize();
     buffer = new byte[ bsz];
     for ( int i = 0; i < bsz; ++i)
         buffer[i] = 0;
@@ -34,9 +34,9 @@ void orderIndices( uint &i, uint &j)
 }   // end orderIndices
 
 
-uint calcBitIndex( uint sz, uint low, uint high)
+uint calcBitIndex( size_t sz, uint low, uint high)
 {
-    return sz*low - (low*(low + 1))/2 + high;
+    return (uint)sz*low - (low*(low + 1))/2 + high;
 }   // end calcBitIndex
 
 
@@ -81,7 +81,7 @@ size_t SymmetricBitSet::byteSize() const
 
 ostream &rlib::operator<<( ostream &os, const SymmetricBitSet &bsm)
 {
-    const int &sz = bsm.sz;
+    const int sz = (int)bsm.sz;
     for ( int i = 0; i < sz; ++i)
     {
         for ( int j = 0; j < sz; ++j)

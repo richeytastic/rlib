@@ -70,14 +70,14 @@ void UndoStack<T>::push( const T& t)
 template <typename T>
 bool UndoStack<T>::canUndo() const
 {
-    return _cur->prev;
+    return _cur->prev != NULL;
 }   // end canUndo
 
 
 template <typename T>
 bool UndoStack<T>::canRedo() const
 {
-    return _cur->next;
+    return _cur->next != NULL;
 }   // end canRedo
 
 

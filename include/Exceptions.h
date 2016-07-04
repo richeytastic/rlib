@@ -2,13 +2,32 @@
 // Richard Palmer
 // 25 June 2007
 
-//#pragma once
 #ifndef RLIB_EXCEPTIONS_H
 #define RLIB_EXCEPTIONS_H
 
 #include "rlib_Export.h"
 #include <exception>
 #include <string>
+
+// Disable warnings about standard template library specialisations not being exported in the DLL interface
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#pragma warning( disable : 4275)
+#endif
+/*
+#ifdef _WIN32
+class rlib_EXPORT std::exception;
+template struct rlib_EXPORT std::_Simple_types<char>;
+struct rlib_EXPORT std::_Container_base12;
+template class rlib_EXPORT std::_String_val<std::_Simple_types<char> >;
+template class rlib_EXPORT std::allocator<char>;
+template struct rlib_EXPORT std::_Wrap_alloc<std::allocator<char> >;
+template class rlib_EXPORT std::_Compressed_pair<std::_Wrap_alloc<std::allocator<char> >, std::_String_val<std::_Simple_types<char> >, true>;
+template struct rlib_EXPORT std::char_traits<char>;
+template class rlib_EXPORT std::basic_string<char, std::char_traits<char>, std::allocator<char> >;
+#endif
+*/
+
 using std::string;
 
 namespace rlib

@@ -2,7 +2,7 @@
 using rlib::ProgressUpdater;
 
 
-ProgressUpdater::ProgressUpdater( size_t taskSize) : m_sz(taskSize), m_idx(-1), m_lastpc(-1), m_pc(0)
+ProgressUpdater::ProgressUpdater( size_t taskSize) : m_sz((int)taskSize), m_idx(-1), m_lastpc(-1), m_pc(0)
 {
    update();
 } // end ctor
@@ -21,7 +21,7 @@ string ProgressUpdater::update( size_t num)
    if ( m_idx >= m_sz)
       num = 0;
 
-   m_idx += num;
+   m_idx += (int)num;
    int pc = (int)((double)m_idx/m_sz * 100);
    if ( pc >= 100)
       m_idx = m_sz;
