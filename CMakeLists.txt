@@ -1,32 +1,21 @@
 cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
 project( rlib)
 
-include( "../LibCMakeCommon.cmake")
-set( BUILD_SHARED_LIBS TRUE)
+set( WITH_BOOST TRUE)
+set( WITH_EIGEN TRUE)
+include( "cmake/LibCommon.cmake")
 
-set( SRC_DIR "${PROJECT_SOURCE_DIR}/src")
 set( INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
-include_directories( "${INCLUDE_DIR}")
-
-# Include the build directory because generated header files sit here.
-include_directories( "${PROJECT_BINARY_DIR}")
-
-# Eigen3
-find_package( Eigen3 3.1.2 REQUIRED)
-include_directories( ${EIGEN3_INCLUDE_DIR})
-
-# Boost
-find_package( Boost 1.58 REQUIRED COMPONENTS system filesystem thread random regex)
-include_directories( ${Boost_INCLUDE_DIRS})
-message( STATUS "Boost_LIBRARY_DIR=${Boost_LIBRARY_DIR}")
-message( STATUS "Boost_LIBRARIES=${Boost_LIBRARIES}")
-add_definitions(${Boost_LIB_DIAGNOSTIC_DEFINITIONS})
+set( SRC_DIR "${PROJECT_SOURCE_DIR}/src")
+include_directories( ${INCLUDE_DIR})
 
 set( INCLUDE_FILES
+    "${INCLUDE_DIR}/${PROJECT_NAME}.h"
     "${INCLUDE_DIR}/ConvexOptimiser.h"
     "${INCLUDE_DIR}/Convert.h"
     "${INCLUDE_DIR}/template/Convert_template.h"
-    "${INCLUDE_DIR}/CmdLine.h"
+    "${INCLUDE_DIR}/CmdLnArgsParser.h"
+    "${INCLUDE_DIR}/template/CmdLnArgsParser_template.h"
     "${INCLUDE_DIR}/CpuTimer.h"
     "${INCLUDE_DIR}/Exceptions.h"
     "${INCLUDE_DIR}/FileIO.h"
@@ -42,7 +31,6 @@ set( INCLUDE_FILES
     "${INCLUDE_DIR}/template/SymmetricMatrix_template.h"
     #"${INCLUDE_DIR}/ThreadManager.h"
     "${INCLUDE_DIR}/Timer.h"
-    "${INCLUDE_DIR}/rlib.h"
     "${INCLUDE_DIR}/ustring.h"
     "${INCLUDE_DIR}/UndoStack.h"
     "${INCLUDE_DIR}/template/UndoStack_template.h"
@@ -53,7 +41,7 @@ set( SRC_FILES
     #${SRC_DIR}/Compression
     ${SRC_DIR}/ConvexOptimiser
     ${SRC_DIR}/Convert
-    ${SRC_DIR}/CmdLine
+    ${SRC_DIR}/CmdLnArgsParser
     ${SRC_DIR}/CpuTimer
     ${SRC_DIR}/Exceptions
     #${SRC_DIR}/CubeRObj
@@ -82,25 +70,6 @@ set( SRC_FILES
     ${SRC_DIR}/Vectors
     )
 
-# Require generate_export_header for .lib import libraries associated with Windows DLLs (if BUILD_SHARED_LIBS is true)
-include(GenerateExportHeader)
 add_library( ${PROJECT_NAME} ${SRC_FILES} ${INCLUDE_FILES})
-generate_export_header( ${PROJECT_NAME}
-    BASE_NAME ${PROJECT_NAME}
-    EXPORT_MACRO_NAME ${PROJECT_NAME}_EXPORT
-    EXPORT_FILE_NAME ${PROJECT_NAME}_Export.h
-    STATIC_DEFINE ${PROJECT_NAME}_BUILT_AS_STATIC)
 
-target_link_libraries( ${PROJECT_NAME} ${Boost_LIBRARIES})
-
-set( CMAKE_INSTALL_PREFIX "${LOCALLIBS}/${PROJECT_NAME}")
-install( TARGETS ${PROJECT_NAME} RUNTIME DESTINATION "bin"
-                                 LIBRARY DESTINATION "lib"
-                                 ARCHIVE DESTINATION "lib/static")
-
-install( FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}_Export.h" DESTINATION "include")
-install( FILES ${INCLUDE_FILES} DESTINATION "include")
-install( DIRECTORY "${INCLUDE_DIR}/template" DESTINATION "include")
-# Copy across this library's Find cmake module to ${LOCALLIBS}/cmake
-install( FILES "${PROJECT_SOURCE_DIR}/../CMakeModules/FindRLIB.cmake" DESTINATION "${LOCALLIBS}/cmake")
-
+include( "cmake/LibInstall.cmake")

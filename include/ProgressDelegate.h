@@ -7,7 +7,6 @@
  * other class to call its function at appropriate intervals.
  */
 
-#pragma once
 #ifndef RLIB_PROGRESS_DELEGATE_H
 #define RLIB_PROGRESS_DELEGATE_H
 

@@ -5,11 +5,11 @@
  * June 2011
  */
 
-#pragma once
 #ifndef RLIB_VECTORS_H
 #define RLIB_VECTORS_H
 
 #include "rlib_Export.h"
+#define _USE_MATH_DEFINES   1   // Needed for MSVC math.h
 #include <cmath>
 #include <cfloat>
 #include <istream>
