@@ -37,7 +37,7 @@ namespace rlib
 class rlib_EXPORT IOFormats
 {
 public:
-    IOFormats();   // Calls populateFormats - override in children.
+    IOFormats(){}
     virtual ~IOFormats(){}
 
     // Get the last error reported from a failed save/load attempt.
@@ -55,13 +55,11 @@ public:
     bool isSupported( const std::string& filename) const;
 
 protected:
-    virtual void populateFormats(){ /*children must override with calls to addSupported*/}
-    bool addSupported( const std::string& ext, const std::string& desc);    // Cannot be called outside of populateFormats
+    bool addSupported( const std::string& ext, const std::string& desc);
     virtual void setErr( const std::string& errMsg);
 
 private:
     std::string _err;
-    bool _allowFormatsAdd;
     std::vector<std::string> _exts;
     boost::unordered_map<std::string, std::string> _exts2desc;
     IOFormats( const IOFormats&);      // No copy
