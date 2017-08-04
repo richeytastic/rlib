@@ -1,6 +1,9 @@
-#pragma once
 #ifndef RLIB_LINE_REGRESSOR_H
 #define RLIB_LINE_REGRESSOR_H
+
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
 
 #include "rlib_Export.h"
 #include <vector>

@@ -10,6 +10,10 @@
 #ifndef RLIB_PROGRESS_DELEGATE_H
 #define RLIB_PROGRESS_DELEGATE_H
 
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
+
 #include "rlib_Export.h"
 #include <boost/thread.hpp>
 #include <boost/lexical_cast.hpp>

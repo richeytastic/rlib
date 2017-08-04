@@ -5,6 +5,10 @@
 #ifndef RLIB_IO_FORMATS_H
 #define RLIB_IO_FORMATS_H
 
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
+
 #include "rlib_Export.h"
 #include <string>
 #include <vector>

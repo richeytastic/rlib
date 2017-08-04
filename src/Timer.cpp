@@ -4,7 +4,7 @@ using rlib::Timer;
 #include <cassert>
 
 
-Timer::Timer( const string &t, ostream &o) : _tag(t), _os(&o)
+Timer::Timer( const std::string &t, std::ostream &o) : _tag(t), _os(&o)
 {
     _tv0 = clock();
 }   // end ctor

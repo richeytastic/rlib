@@ -1,13 +1,17 @@
 #ifndef RLIB_CMD_LN_ARGS_PARSER_H
 #define RLIB_CMD_LN_ARGS_PARSER_H
 
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
+
+#include "rlib_Export.h"
 #include <string>
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include <cassert>
 #include <boost/unordered_map.hpp>
-#include "rlib_Export.h"
 
 namespace rlib
 {

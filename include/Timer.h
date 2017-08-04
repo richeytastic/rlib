@@ -1,12 +1,13 @@
-#pragma once
 #ifndef RLIB_TIMER_H
 #define RLIB_TIMER_H
 
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
+
 #include "rlib_Export.h"
 #include <string>
-using std::string;
 #include <ostream>
-using std::ostream;
 #include <ctime>
 
 
@@ -16,12 +17,12 @@ namespace rlib
 class rlib_EXPORT Timer
 {
 public:
-    Timer( const string &tag, ostream &os);
+    Timer( const std::string &tag, std::ostream &os);
     ~Timer();
 
 private:
-    string _tag;
-    ostream* _os;
+    std::string _tag;
+    std::ostream* _os;
     clock_t _tv0;
 
     // No copy constructors

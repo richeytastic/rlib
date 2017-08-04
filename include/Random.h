@@ -1,6 +1,9 @@
 #ifndef RLIB_RANDOM_H
 #define RLIB_RANDOM_H
 
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
 #include "rlib_Export.h"
 #include <boost/random/mersenne_twister.hpp>
 

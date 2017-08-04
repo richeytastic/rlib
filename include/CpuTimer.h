@@ -6,9 +6,12 @@
  *    ... your code fragment here ...
  * }  // end of block, object ct's destructor is called
  */
-#pragma once
 #ifndef RLIB_CPU_TIMER_H
 #define RLIB_CPU_TIMER_H
+
+#ifdef _WIN32
+#pragma warning( disable : 4251)
+#endif
 
 #include "rlib_Export.h"
 #include<string>
