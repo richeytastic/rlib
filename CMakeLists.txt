@@ -19,6 +19,7 @@ set( INCLUDE_FILES
     "${INCLUDE_DIR}/CpuTimer.h"
     "${INCLUDE_DIR}/Exceptions.h"
     "${INCLUDE_DIR}/FileIO.h"
+    "${INCLUDE_DIR}/IOFormats.h"
     "${INCLUDE_DIR}/LinearRegressor.h"
     #"${INCLUDE_DIR}/Lock.h"
     "${INCLUDE_DIR}/NewtonRaphson.h"
@@ -46,6 +47,7 @@ set( SRC_FILES
     ${SRC_DIR}/Exceptions
     #${SRC_DIR}/CubeRObj
     ${SRC_DIR}/FileIO
+    ${SRC_DIR}/IOFormats
     #${SRC_DIR}/HttpClient  # Uses cURL lib
     #${SRC_DIR}/HTTPClient
     #${SRC_DIR}/ImageHandling
