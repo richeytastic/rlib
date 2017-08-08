@@ -41,7 +41,7 @@ public:
     virtual ~IOFormats(){}
 
     // Get the last error reported from a failed save/load attempt.
-    const std::string& getErr() const { return _err;}
+    const std::string& err() const { return _err;}
 
     // Get the supported filename extensions (without dots).
     const std::vector<std::string>& getExtensions() const { return _exts;}
