@@ -46,13 +46,16 @@ public:
     // Get the supported filename extensions (without dots).
     const std::vector<std::string>& getExtensions() const { return _exts;}
 
-    // Get the description for the requested filename extensions.
+    // Get the description for the requested filename extension.
     // ext may be upper or lower case, but it must be present in the mapping
     // of extensions to descriptions!
     const std::string& getDescription( const std::string& ext) const;
 
     // Returns true iff the extension for the given filename is supported by this importer/exporter.
     bool isSupported( const std::string& filename) const;
+
+    // Returns true iff addSupported was called from a derived type.
+    bool isSupported() const { return !getExtensions().empty();}
 
 protected:
     bool addSupported( const std::string& ext, const std::string& desc);
