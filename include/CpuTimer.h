@@ -19,7 +19,7 @@
  * Prints an approximation of processor time (in msecs) used by any
  * part of a program where an instance of this class is in scope.
  * Use to time a fragment of code within its own scoped block e.g.:
- * {CpuTimer ct( "myTag", cerr); // Opening brace starts block
+ * {CpuTimer ct( "myTag", cout); // Opening brace starts block
  *    ... your code fragment here ...
  * }  // end of block, object ct's destructor is called
  */
@@ -31,11 +31,11 @@
 #endif
 
 #include "rlib_Export.h"
-#include<string>
+#include <string>
 using std::string;
-#include<ostream>
+#include <ostream>
 using std::ostream;
-#include<ctime>
+#include <ctime>
 
 
 namespace rlib
