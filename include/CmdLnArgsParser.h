@@ -35,7 +35,7 @@ namespace rlib
 
 class CmdLnArgsParser;  // For friend declaration
 
-class rlib_EXPORT SwitchArgs
+class SwitchArgs
 {
 public:
     explicit SwitchArgs( const std::string& sw) : _sw(sw), _yi(-1), _found(false) {}
