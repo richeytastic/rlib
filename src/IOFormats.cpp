@@ -35,6 +35,9 @@ const std::string& IOFormats::getDescription( const std::string& ext) const
 // public
 bool IOFormats::isSupported( const std::string& fname) const
 {
+    if ( fname.empty())
+        return false;
+
     // Check if the filename extension is supported.
     const std::string ext = rlib::getExtension(fname);
     if ( ext.empty())
