@@ -29,10 +29,9 @@
 #include "rlib_Export.h"
 #include <string>
 #include <vector>
-#include <boost/unordered_map.hpp>
+#include <unordered_map>
 
-namespace rlib
-{
+namespace rlib {
 
 class rlib_EXPORT IOFormats
 {
@@ -64,7 +63,7 @@ protected:
 private:
     std::string _err;
     std::vector<std::string> _exts;
-    boost::unordered_map<std::string, std::string> _exts2desc;
+    std::unordered_map<std::string, std::string> _exts2desc;
     IOFormats( const IOFormats&);      // No copy
     void operator=( const IOFormats&); // No copy
 };  // end class

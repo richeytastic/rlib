@@ -17,8 +17,8 @@
 
 #include <ProgressDelegate.h>
 using rlib::ProgressDelegate;
-#include <cassert>
 #include <algorithm>
+#include <cassert>
 #include <cstdlib>
 
 
@@ -28,7 +28,6 @@ ProgressDelegate::ProgressDelegate( int numThreads)
 }   // end ctor
 
 
-
 // public
 void ProgressDelegate::updateProgress( float propComp)
 {
@@ -36,9 +35,6 @@ void ProgressDelegate::updateProgress( float propComp)
     doUpdateProgress( propComp);
 }   // end updateProgress
 
-
-#include <map>
-typedef std::pair<unsigned long, float> MinPropTuple;
 
 void ProgressDelegate::doUpdateProgress( float propComp)
 {
@@ -54,10 +50,8 @@ void ProgressDelegate::doUpdateProgress( float propComp)
 #endif
 
     _threadProps[tid] = propComp;
-    // Calculate the mean proportion complete across threads
-    float sumProps = 0;
-    BOOST_FOREACH ( const MinPropTuple& minPropTuple, _threadProps)
-        sumProps += minPropTuple.second;
+    float sumProps = 0; // Calculate the mean proportion complete across threads
+    std::for_each( std::begin(_threadProps), std::end(_threadProps), [&]( const auto& mp){ sumProps += mp.second;});
 
     const float totalProp = std::min<float>( sumProps / _numThreads, 1);
     this->processUpdate( totalProp); // virtual

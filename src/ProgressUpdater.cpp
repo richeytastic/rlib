@@ -16,24 +16,23 @@
  ************************************************************************/
 
 #include <ProgressUpdater.h>
+#include <sstream>
+#include <iomanip>
 using rlib::ProgressUpdater;
-
 
 ProgressUpdater::ProgressUpdater( size_t taskSize) : m_sz((int)taskSize), m_idx(-1), m_lastpc(-1), m_pc(0)
 {
-   update();
+    update();
 } // end ctor
-
 
 
 ProgressUpdater::~ProgressUpdater()
 {
-   finish();
+    finish();
 }  // end dtor
 
 
-
-string ProgressUpdater::update( size_t num)
+std::string ProgressUpdater::update( size_t num)
 {
    if ( m_idx >= m_sz)
       num = 0;
@@ -50,25 +49,23 @@ string ProgressUpdater::update( size_t num)
 }  // end update
 
 
-
-string ProgressUpdater::finish()
+std::string ProgressUpdater::finish()
 {
    m_idx = m_sz;
    return update(0);
 }  // end finish
 
 
-
-string ProgressUpdater::getProgressString() const
+std::string ProgressUpdater::getProgressString() const
 {
-   ostringstream oss;
+   std::ostringstream oss;
    int cpc = m_lastpc;  // Current percentage to print
    while ( cpc < m_pc)
    {
       if ( cpc % 10 == 9 || cpc == 100)
-         oss << endl;
+         oss << std::endl;
       else if ( cpc % 10 == 0)
-         oss << "[" << setw(3) << right << cpc << "%]";
+         oss << "[" << std::setw(3) << std::right << cpc << "%]";
       else
          oss << " .";
 
@@ -78,8 +75,7 @@ string ProgressUpdater::getProgressString() const
 }  // end getProgressString
 
 
-
-ostream &rlib::operator<<( ostream &os, const ProgressUpdater &pu)
+std::ostream &rlib::operator<<( std::ostream &os, const ProgressUpdater &pu)
 {
    return os << pu.getProgressString();
 }  // end operator<<

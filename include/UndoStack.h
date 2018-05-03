@@ -15,15 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#pragma once
 #ifndef RLIB_UNDO_STACK_H
 #define RLIB_UNDO_STACK_H
 
 #include <cstdlib>
 #include <cassert>
 
-namespace RLIB
-{
+namespace RLIB {
 
 template <typename T>
 class UndoStack

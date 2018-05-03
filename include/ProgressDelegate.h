@@ -34,20 +34,11 @@
 #include "rlib_Export.h"
 #include <boost/thread.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/unordered_map.hpp>
-#include <boost/foreach.hpp>
+#include <unordered_map>
 #include <iostream>
 #include <string>
 
-/*
-#ifdef _WIN32
-class rlib_EXPORT boost::mutex;
-template class rlib_EXPORT boost::unordered_map<unsigned long, float>;
-#endif
-*/
-
-namespace rlib
-{
+namespace rlib {
 
 class rlib_EXPORT ProgressDelegate
 {
@@ -73,11 +64,10 @@ private:
     const int _numThreads;
     bool _complete;
     boost::mutex _propCompMutex;
-    boost::unordered_map<unsigned long, float> _threadProps;
+    std::unordered_map<unsigned long, float> _threadProps;
 
     void doUpdateProgress( float propComp);     // Non-thread safe
 };  // end class
-
 
 
 class rlib_EXPORT OsPcntUpdater : public ProgressDelegate
@@ -107,7 +97,6 @@ protected:
     const std::string _prefix;
     const std::string _postfix;
 };  // end class
-
 
 }   // end namespace
 
