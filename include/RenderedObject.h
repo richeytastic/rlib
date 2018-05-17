@@ -15,13 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#pragma once
+#ifndef RLIB_RENDERED_OBJECT
+#define RLIB_RENDERED_OBJECT
+
+#include "rlib_Export.h"
 #include <GL/glut.h>
 
-namespace rlib
-{
+namespace rlib {
 
-class RenderedObject
+class rlib_EXPORT RenderedObject
 {
 public:
     virtual ~RenderedObject() {}
@@ -29,4 +31,6 @@ public:
     virtual GLuint createDisplayList( unsigned int numIds, GLuint *textId) const = 0;
 }; // end class RenderedObject
 
-}  // end namespace rlib
+}  // end namespace
+
+#endif

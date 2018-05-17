@@ -15,21 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#pragma once
-#include <RenderedObject.h>
-using namespace rlib;
+#ifndef RLIB_CUBEROBJ
+#define RLIB_CUBEROBJ
 
+#include "RenderedObject.h"
 #include<string>
-using std::string;
 
+namespace rlib {
 
-class CubeRObj : public RenderedObject
+class rlib_EXPORT CubeRObj : public RenderedObject
 {
 public:
-   CubeRObj( string id_string, double boxSize) : id( id_string), BOX_SIZE( boxSize) {}
+   CubeRObj( std::string id_string, double boxSize) : id( id_string), BOX_SIZE( boxSize) {}
    virtual ~CubeRObj(){}
 
-   string getId() const { return id;}
+   std::string getId() const { return id;}
    double sideLength() const { return BOX_SIZE;}
 
    // inherited member functions
@@ -40,6 +40,10 @@ private:
    CubeRObj( const CubeRObj &inCube) {} // prevent copy calls
    CubeRObj &operator=( const CubeRObj &copyCube){ return *this;} // prevent assignment
 
-   string id;
+   std::string id;
    double BOX_SIZE;  // length of cube sides
-}; // end class CubeRObj
+}; // end class
+
+}   // end namespace
+
+#endif 

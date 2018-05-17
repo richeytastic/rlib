@@ -15,6 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
+#ifndef RLIB_LOCK_H
+#define RLIB_LOCK_H
+
 /**
  * Class Lock is a mutex resource manager.
  * Objects requiring mutex locks should define a critical
@@ -39,19 +42,14 @@
  * @date June 2008
  */
 
-#pragma once
-#ifndef RLIB_LOCK_H
-#define RLIB_LOCK_H
-
+#include "rlib_Export.h"
 #include <pthread.h>
 #include <tr1/memory>
 using std::tr1::shared_ptr;
 
+namespace rlib {
 
-namespace rlib
-{
-
-class Lock
+class rlib_EXPORT Lock
 {
 public:
     explicit Lock( const pthread_mutex_t &m)

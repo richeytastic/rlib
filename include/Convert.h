@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#pragma once
 #ifndef RLIB_CONVERT_H
 #define RLIB_CONVERT_H
 
@@ -24,8 +23,7 @@
 #include <iostream>
 #include <algorithm>
 
-namespace rlib
-{
+namespace rlib {
 
 // Returns "FALSE" if !v else "TRUE"
 extern rlib_EXPORT std::string asString( bool v);

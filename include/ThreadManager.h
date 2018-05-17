@@ -37,18 +37,15 @@
  */
 
 
-#pragma once
 #ifndef RLIB_THREAD_MANAGER_H
 #define RLIB_THREAD_MANAGER_H
 
 #include "Lock.h"
 #include <signal.h>
 
+namespace rlib {
 
-namespace rlib
-{
-
-class ThreadManager
+class rlib_EXPORT ThreadManager
 {
 public:
     ThreadManager( sigset_t *mask=0);	// Blocks the provided signals
