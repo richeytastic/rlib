@@ -50,6 +50,8 @@ public:
     // Called with value between 0 and 1 inclusive (reentrant).
     void updateProgress( float proportionComplete);
 
+    float progress() const; // Returns the current progress
+
     inline int getNumThreads() const { return _numThreads;}
 
     inline bool isComplete() const { return _complete;}
@@ -63,7 +65,7 @@ protected:
 private:
     const int _numThreads;
     bool _complete;
-    boost::mutex _propCompMutex;
+    mutable boost::mutex _propCompMutex;
     std::unordered_map<unsigned long, float> _threadProps;
 
     void doUpdateProgress( float propComp);     // Non-thread safe

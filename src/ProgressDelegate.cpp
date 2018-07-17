@@ -31,16 +31,13 @@ ProgressDelegate::ProgressDelegate( int numThreads)
 // public
 void ProgressDelegate::updateProgress( float propComp)
 {
-    boost::mutex::scoped_lock lock(_propCompMutex);
     doUpdateProgress( propComp);
 }   // end updateProgress
 
 
-void ProgressDelegate::doUpdateProgress( float propComp)
+namespace {
+unsigned long getThreadId()
 {
-    assert( propComp >= 0 && propComp <= 1);
-
-    // Get this thread's ID
     const std::string stid = boost::lexical_cast<std::string>( boost::this_thread::get_id());
     unsigned long tid;
 #ifdef _WIN32   // Avoid compiler warning (sscanf_s only more secure when passing in strings - need to supply buffer length too)
@@ -48,11 +45,31 @@ void ProgressDelegate::doUpdateProgress( float propComp)
 #else
     sscanf( stid.c_str(), "%lx", &tid);
 #endif
+    return tid;
+}   // end getThreadId
 
-    _threadProps[tid] = propComp;
+}   // end namespace
+
+
+// public
+float ProgressDelegate::progress() const
+{
     float sumProps = 0; // Calculate the mean proportion complete across threads
+    boost::mutex::scoped_lock lock(_propCompMutex);
     std::for_each( std::begin(_threadProps), std::end(_threadProps), [&]( const auto& mp){ sumProps += mp.second;});
+    return sumProps;
+}   // end progress
 
+
+void ProgressDelegate::doUpdateProgress( float propComp)
+{
+    assert( propComp >= 0 && propComp <= 1);
+
+    unsigned long tid = getThreadId();
+    { boost::mutex::scoped_lock lock(_propCompMutex);
+    _threadProps[tid] = propComp;
+    }   // end lock
+    float sumProps = progress();
     const float totalProp = std::min<float>( sumProps / _numThreads, 1);
     this->processUpdate( totalProp); // virtual
     if ( totalProp >= 1)
