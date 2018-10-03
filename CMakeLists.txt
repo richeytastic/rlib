@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.12.2 FATAL_ERROR)
 
 project( rlib)
 
@@ -23,11 +23,14 @@ set( INCLUDE_FILES
     "${INCLUDE_DIR}/IOFormats.h"
     "${INCLUDE_DIR}/LinearRegressor.h"
     #"${INCLUDE_DIR}/Lock.h"
+    "${INCLUDE_DIR}/MathUtil.h"
     "${INCLUDE_DIR}/NewtonRaphson.h"
     "${INCLUDE_DIR}/Pack.h"
     "${INCLUDE_DIR}/ProgressDelegate.h"
     "${INCLUDE_DIR}/ProgressUpdater.h"
     "${INCLUDE_DIR}/Random.h"
+    "${INCLUDE_DIR}/RangedScalarDistribution.h"
+    "${INCLUDE_DIR}/Round.h"
     "${INCLUDE_DIR}/SymmetricBitSet.h"
     "${INCLUDE_DIR}/SymmetricMatrix.h"
     "${INCLUDE_DIR}/template/SymmetricMatrix_template.h"
@@ -54,6 +57,7 @@ set( SRC_FILES
     #${SRC_DIR}/ImageHandling
     ${SRC_DIR}/LinearRegressor
     #${SRC_DIR}/Lock
+    ${SRC_DIR}/MathUtil
     #${SRC_DIR}/Model
     ${SRC_DIR}/NewtonRaphson
     ${SRC_DIR}/Pack
@@ -61,6 +65,7 @@ set( SRC_FILES
     ${SRC_DIR}/ProgressDelegate
     ${SRC_DIR}/ProgressUpdater
     ${SRC_DIR}/Random
+    ${SRC_DIR}/RangedScalarDistribution
     #${SRC_DIR}/Scene
     #${SRC_DIR}/SdlTimer
     ${SRC_DIR}/SymmetricBitSet

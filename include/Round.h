@@ -15,35 +15,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#ifndef RLIB_NEWTON_RAPHSON_H
-#define RLIB_NEWTON_RAPHSON_H
+#ifndef RLIB_ROUND_H
+#define RLIB_ROUND_H
 
 #include "rlib_Export.h"
+#include <cmath>
+#include <string>
+#include <sstream>
+#include <iomanip>
 
 namespace rlib {
 
-// A function object and its first derivative
-class rlib_EXPORT Function
+// Round v away from zero for n decimal places.
+double roundAway( double v, int n) { return long(pow(10,n)*v + copysign(0.5,v))*pow(10,-n);}
+
+// Round v in a positive direction for n decimal places.
+double roundUp( double v, int n) { return long(pow(10,n)*v + 0.5)*pow(10,-n);}
+
+// Return v rounded to n decimal places as a string showing only n decimal places.
+std::string dps( double v, int n)
 {
-public:
-    virtual double operator()( double x) const = 0;
-    virtual double d( double x) const = 0;
-};  // end class
+    std::ostringstream oss;
+    oss << std::fixed << std::setprecision(n) << roundAway(v,n);
+    return oss.str();
+}   // end dps
 
-
-class rlib_EXPORT NewtonRaphson
-{
-public:
-    NewtonRaphson( const Function&);
-
-    // Find the root of the given function to dps decimal places.
-    // startx: value to start optimisation at
-    double operator()( int dps, double startx=0) const;
-
-private:
-    const Function& _f;
-};  // end class
-
-}   // end namespace
+}   // end rlib
 
 #endif

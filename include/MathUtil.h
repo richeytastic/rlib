@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2017 Richard Palmer
+ * Copyright (C) 2018 Richard Palmer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,34 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#ifndef RLIB_NEWTON_RAPHSON_H
-#define RLIB_NEWTON_RAPHSON_H
+#ifndef RLIB_MATH_UTIL_H
+#define RLIB_MATH_UTIL_H
 
-#include "rlib_Export.h"
+#include "NewtonRaphson.h"
+#include <vector>
+
+using DP = double;
+using Vec_DP = std::vector<double>;
+
 
 namespace rlib {
 
-// A function object and its first derivative
-class rlib_EXPORT Function
-{
-public:
-    virtual double operator()( double x) const = 0;
-    virtual double d( double x) const = 0;
-};  // end class
-
-
-class rlib_EXPORT NewtonRaphson
-{
-public:
-    NewtonRaphson( const Function&);
-
-    // Find the root of the given function to dps decimal places.
-    // startx: value to start optimisation at
-    double operator()( int dps, double startx=0) const;
-
-private:
-    const Function& _f;
-};  // end class
+// Given arrays xa and ya of the same length where ya[i] = f(xa[i]), interpolate to find and return f(x).
+// On return, dy is the error estimate. This function taken from "Numerical Recipies in C++" 2nd edition, p113.
+rlib_EXPORT DP polint( const Vec_DP& xa, const Vec_DP& ya, DP x, DP& dy);
 
 }   // end namespace
 

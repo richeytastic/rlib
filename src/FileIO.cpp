@@ -17,10 +17,9 @@
 
 #include <FileIO.h>
 #include <algorithm>
-#include <boost/foreach.hpp>
-#include <boost/regex.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/filesystem/operations.hpp>
+//#include <boost/regex.hpp>
+//#include <boost/algorithm/string.hpp>
+//#include <boost/filesystem/operations.hpp>
 
 
 /**
@@ -36,7 +35,7 @@ std::string rlib::findFile( const std::string &dname, const std::string &xt)
 {
     const std::list<std::string> fnames = getFilenames( dname);
     std::string foundFile;
-    BOOST_FOREACH ( const std::string& fn, fnames)
+    for ( const std::string& fn : fnames)
     {
         if ( fn.find_last_of(xt) != std::string::npos)
         {

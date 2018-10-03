@@ -25,9 +25,11 @@
 #include "rlib_Export.h"
 #include <list>
 #include <string>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem/operations.hpp>
 
-namespace rlib
-{
+namespace rlib {
 
 rlib_EXPORT bool isValidDir( const std::string &dname);
 

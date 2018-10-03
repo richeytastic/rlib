@@ -56,7 +56,7 @@ float ProgressDelegate::progress() const
 {
     float sumProps = 0; // Calculate the mean proportion complete across threads
     boost::mutex::scoped_lock lock(_propCompMutex);
-    std::for_each( std::begin(_threadProps), std::end(_threadProps), [&]( const auto& mp){ sumProps += mp.second;});
+    std::for_each( std::begin(_threadProps), std::end(_threadProps), [&]( const std::pair<unsigned long, float>& mp){ sumProps += mp.second;});
     return sumProps;
 }   // end progress
 
