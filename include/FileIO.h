@@ -25,9 +25,7 @@
 #include "rlib_Export.h"
 #include <list>
 #include <string>
-#include <boost/regex.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/filesystem/operations.hpp>
+#include <vector>
 
 namespace rlib {
 
@@ -63,6 +61,14 @@ rlib_EXPORT std::string getExtension( const std::string& filename);
 
 // Remove all occurances of "(*)" in given string.
 rlib_EXPORT void removeParentheticalContent( std::string&);
+
+using StringVec = std::vector<std::string>;
+
+// Read in the flat file formatted file fname into lines returning the number of records read in or < 0 on error.
+// Each line is a record with delimited fields e.g.: x0|x1|x2|x3
+// Default delimiter is set to any of '|', ',' '\t'. Leading and trailing whitespace is removed from the content of each field.
+// Empty lines are skipped. Set skippound true to skip lines starting with #.
+rlib_EXPORT int readFlatFile( const std::string& fname, std::vector<StringVec>& lines, std::string delims="|,\t", bool skippound=false);
 
 }   // end namespace
 

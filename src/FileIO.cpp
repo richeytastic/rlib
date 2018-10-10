@@ -16,10 +16,13 @@
  ************************************************************************/
 
 #include <FileIO.h>
+#include <stdexcept>
 #include <algorithm>
-//#include <boost/regex.hpp>
-//#include <boost/algorithm/string.hpp>
-//#include <boost/filesystem/operations.hpp>
+#include <iostream>
+#include <fstream>
+#include <boost/regex.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/filesystem/operations.hpp>
 
 
 /**
@@ -124,3 +127,37 @@ void rlib::removeParentheticalContent( std::string& s)
     boost::algorithm::trim(s);
 }   // end removeParentheticalContent
 
+
+int rlib::readFlatFile( const std::string& fname, std::vector<rlib::StringVec> &lines, std::string delims, bool skipp)
+{
+    lines.clear();
+    int nrecs = 0;
+    try
+    {
+        std::ifstream ifs;
+        ifs.open( fname, std::ifstream::in);
+
+        std::string ln;
+        while ( ifs.good() && !ifs.eof())
+        {
+            std::getline( ifs, ln);
+            if ( ln.empty() || (skipp && ln[0] == '#'))    // Empty lines or lines starting with # are ignored
+                continue;
+
+            lines.resize( lines.size()+1);
+            rlib::StringVec& vals = *lines.rbegin();
+            boost::split( vals, ln, boost::is_any_of(delims));
+            for ( std::string& tok : vals) // Remove leading and trailing whitespace from all tokens
+                boost::algorithm::trim(tok);
+            nrecs++;
+        }   // end while
+
+        ifs.close();
+    }   // end try
+    catch ( const std::exception& e)
+    {
+        std::cerr << "[ERROR] rlib::readFlatFile(" << fname << "): " << e.what() << std::endl;
+        nrecs = -1;
+    }   // end catch
+    return nrecs;
+}   // end readFlatFile
