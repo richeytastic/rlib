@@ -20,6 +20,7 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <boost/regex.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -135,21 +136,24 @@ int rlib::readFlatFile( const std::string& fname, std::vector<rlib::StringVec> &
     try
     {
         std::ifstream ifs;
-        ifs.open( fname, std::ifstream::in);
+        ifs.open( fname);
 
-        std::string ln;
         while ( ifs.good() && !ifs.eof())
         {
+            std::string ln;
             std::getline( ifs, ln);
+            boost::algorithm::trim(ln); // Trim leading and trailing whitespace from the line
+
             if ( ln.empty() || (skipp && ln[0] == '#'))    // Empty lines or lines starting with # are ignored
                 continue;
 
-            lines.resize( lines.size()+1);
+            lines.resize(lines.size()+1);
             rlib::StringVec& vals = *lines.rbegin();
+            nrecs++;
+
             boost::split( vals, ln, boost::is_any_of(delims));
             for ( std::string& tok : vals) // Remove leading and trailing whitespace from all tokens
                 boost::algorithm::trim(tok);
-            nrecs++;
         }   // end while
 
         ifs.close();
@@ -160,4 +164,12 @@ int rlib::readFlatFile( const std::string& fname, std::vector<rlib::StringVec> &
         nrecs = -1;
     }   // end catch
     return nrecs;
+}   // end readFlatFile
+
+
+int rlib::readFlatFile( const std::string& fname, std::vector<rlib::StringVec> &lines, char delim, bool skipp)
+{
+    std::ostringstream oss;
+    oss << delim;
+    return readFlatFile( fname, lines, oss.str(), skipp);
 }   // end readFlatFile

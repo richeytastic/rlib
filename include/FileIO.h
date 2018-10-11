@@ -69,6 +69,7 @@ using StringVec = std::vector<std::string>;
 // Default delimiter is set to any of '|', ',' '\t'. Leading and trailing whitespace is removed from the content of each field.
 // Empty lines are skipped. Set skippound true to skip lines starting with #.
 rlib_EXPORT int readFlatFile( const std::string& fname, std::vector<StringVec>& lines, std::string delims="|,\t", bool skippound=false);
+rlib_EXPORT int readFlatFile( const std::string& fname, std::vector<StringVec>& lines, char delim, bool skippound=false);
 
 }   // end namespace
 
