@@ -21,8 +21,8 @@
 get_filename_component( rlib_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
 get_filename_component( rlib_ROOT_DIR  "${rlib_CMAKE_DIR}"           PATH)
 
-set( rlib_INCLUDE_DIRS "${rlib_ROOT_DIR}/include" CACHE PATH "The rlib include directories.")
-set( rlib_LIBRARY_DIR  "${rlib_ROOT_DIR}/lib"     CACHE PATH "The rlib library directory.")
+set( rlib_INCLUDE_DIRS "${rlib_ROOT_DIR}/../include" CACHE PATH "The rlib include directories.")
+set( rlib_LIBRARY_DIR  "${rlib_ROOT_DIR}"            CACHE PATH "The rlib library directory.")
 
 include( "${CMAKE_CURRENT_LIST_DIR}/Macros.cmake")
 get_library_suffix( _lsuff)
