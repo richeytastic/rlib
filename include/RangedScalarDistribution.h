@@ -39,8 +39,9 @@
 #include <memory>
 
 using DP = double;
-using BVec = boost::container::static_vector<DP,3>;
-using Vec_3DP = std::vector<BVec>;
+using Vec_3DP = std::vector<boost::container::static_vector<DP,3> >;
+using Vec_2DP = std::vector<boost::container::static_vector<DP,2> >;
+using Vec_1DP = std::vector<DP>;
 
 namespace rlib {
 
@@ -54,13 +55,22 @@ public:
     // the Z value (1*+stddev) of the distribution at t.
     // The supplied vector must have at least two members!
     static Ptr create( const Vec_3DP&);
+    static Ptr create( const Vec_2DP&);
+    static Ptr create( const Vec_1DP&);
 
-    // Create from a data file which must have a row for each sample point
-    // with values in the order t m z separated by whitespace. If the input file
-    // could not be read, return null.
+    // Create from a data file which must have a row for each sample point.
+    // Rows can be triples, doubles, or single values with values on a row separated by
+    // whitespace. For double and triple value rows, the first value is taken as the independent
+    // variable (age). For triples, the subsequent two values are taken to be the mean and z-score.
+    // For double values, the second value is taken as the mean (z-score not used - set to zero).
+    // Single value rows are taken as the mean with the row count (starting at zero) taken to be
+    // the independent variable.
+    // Null is returned if the input file cannot be read.
     static Ptr fromFile( const std::string& fname);
 
     RangedScalarDistribution( const Vec_3DP&);
+    RangedScalarDistribution( const Vec_2DP&);
+    RangedScalarDistribution( const Vec_1DP&);
     virtual ~RangedScalarDistribution();
 
     // Return the datapoints used to construct this object.
@@ -70,13 +80,17 @@ public:
     DP operator()( DP t) const { return mval(t);}
     DP mval( DP t) const;
 
-    // Return the z value at t.
+    // Return the z value at t (zero if not set).
     DP zval( DP t) const;
 
+    // Returns true iff this object was constructed with Z values.
+    bool hasZScores() const { return _hasz;}
+
     // Return the Z-score (# standard deviations) that measurement x is away from
-    // the distribution's mean at point t.
+    // the distribution's mean at point t. Will be zero if z-scores not present.
     DP zscore( DP t, DP x) const;
 
+    // Return the min and max values of the independent variable.
     DP tmin() const { return _tmin;}
     DP tmax() const { return _tmax;}
 
@@ -84,6 +98,7 @@ private:
     Vec_3DP _dvec;
     boost::math::barycentric_rational<DP> *_minterp, *_zinterp;
     DP _tmin, _tmax;
+    bool _hasz;
 
     RangedScalarDistribution( const RangedScalarDistribution&) = delete;
     void operator=( const RangedScalarDistribution&) = delete;

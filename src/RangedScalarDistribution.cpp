@@ -23,6 +23,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <cmath>
+#include <boost/algorithm/string.hpp>
 using rlib::RangedScalarDistribution;
 
 
@@ -40,7 +41,7 @@ bool readData( const std::string& fname, Vec_3DP& dvec)
         ifs.close();
         readOk = !dvec.empty();
     }   // end try
-    catch ( const std::exception& e)
+    catch ( const std::exception&)
     {
         readOk = false;
     }   // end catch
@@ -52,6 +53,28 @@ bool readData( const std::string& fname, Vec_3DP& dvec)
 
 
 RangedScalarDistribution::Ptr RangedScalarDistribution::create( const Vec_3DP& d)
+{
+    if ( d.size() < 2)
+    {
+        std::cerr << "[ERROR] rlib::RangedScalarDistribution::create: Must have >= 2 data points!" << std::endl;
+        return Ptr();
+    }   // end if
+    return Ptr( new RangedScalarDistribution( d));
+}   // end create
+
+
+RangedScalarDistribution::Ptr RangedScalarDistribution::create( const Vec_2DP& d)
+{
+    if ( d.size() < 2)
+    {
+        std::cerr << "[ERROR] rlib::RangedScalarDistribution::create: Must have >= 2 data points!" << std::endl;
+        return Ptr();
+    }   // end if
+    return Ptr( new RangedScalarDistribution( d));
+}   // end create
+
+
+RangedScalarDistribution::Ptr RangedScalarDistribution::create( const Vec_1DP& d)
 {
     if ( d.size() < 2)
     {
@@ -85,19 +108,34 @@ std::ostream& rlib::operator<<( std::ostream& os, const Vec_3DP& dvec)
 
 std::istream& rlib::operator>>( std::istream& is, Vec_3DP& dvec)
 {
+    int lnCount = 0;
     DP t, y, z;
     std::string ln;
-
     while ( is.good() && !is.eof())
     {
         std::getline( is, ln);
+        boost::algorithm::trim(ln);
+
         if ( ln.empty())
             continue;
 
-        t = y = z = 0;
+        std::vector<std::string> toks;
+        boost::split( toks, ln, boost::is_any_of("\t "));
         std::istringstream iss( ln);
-        iss >> t >> y >> z;
+
+        t = y = z = 0;
+        if ( toks.size() == 1)
+        {
+            t = lnCount;
+            iss >> y;
+        }   // end if
+        else if ( toks.size() == 2)
+            iss >> t >> y;
+        else if ( toks.size() == 3)
+            iss >> t >> y >> z;
+
         dvec.push_back({t, y, z});
+        lnCount++;
     }   // end while
 
     return is;
@@ -105,7 +143,7 @@ std::istream& rlib::operator>>( std::istream& is, Vec_3DP& dvec)
 
 
 RangedScalarDistribution::RangedScalarDistribution( const Vec_3DP& d)
-    : _minterp( nullptr), _zinterp(nullptr), _tmin(0), _tmax(0)
+    : _minterp( nullptr), _zinterp(nullptr), _tmin(0), _tmax(0), _hasz(true)
 {
     const size_t n = d.size();
     _dvec.resize(n);
@@ -122,11 +160,66 @@ RangedScalarDistribution::RangedScalarDistribution( const Vec_3DP& d)
 
         _dvec[i] = d[i];   // For storage
     }   // end for
+
     _tmin = t[0];
     _tmax = t[n-1];
     _minterp = new boost::math::barycentric_rational<double>( t.data(), m.data(), n);
     _zinterp = new boost::math::barycentric_rational<double>( t.data(), z.data(), n);
 }  // end ctor
+
+
+RangedScalarDistribution::RangedScalarDistribution( const Vec_2DP& d)
+    : _minterp( nullptr), _zinterp(nullptr), _tmin(0), _tmax(0), _hasz(false)
+{
+    const size_t n = d.size();
+    _dvec.resize(n);
+
+    assert( n >= 2);
+    std::vector<double> t(n);
+    std::vector<double> m(n);
+    std::vector<double> z(n);
+    for ( size_t i = 0; i < n; ++i)
+    {
+        t[i] = d[i][0];
+        m[i] = d[i][1];
+        z[i] = 0;
+
+        _dvec[i] = {t[i], m[i], z[i]}; // For storage
+    }   // end for
+
+    _tmin = t[0];
+    _tmax = t[n-1];
+    _minterp = new boost::math::barycentric_rational<double>( t.data(), m.data(), n);
+    _zinterp = new boost::math::barycentric_rational<double>( t.data(), z.data(), n);
+}  // end ctor
+
+
+
+RangedScalarDistribution::RangedScalarDistribution( const Vec_1DP& d)
+    : _minterp( nullptr), _zinterp(nullptr), _tmin(0), _tmax(0), _hasz(false)
+{
+    const size_t n = d.size();
+    _dvec.resize(n);
+
+    assert( n >= 2);
+    std::vector<double> t(n);
+    std::vector<double> m(n);
+    std::vector<double> z(n);
+    for ( size_t i = 0; i < n; ++i)
+    {
+        t[i] = double(i);
+        m[i] = d[i];
+        z[i] = 0;
+
+        _dvec[i] = {t[i], m[i], z[i]}; // For storage
+    }   // end for
+
+    _tmin = t[0];
+    _tmax = t[n-1];
+    _minterp = new boost::math::barycentric_rational<double>( t.data(), m.data(), n);
+    _zinterp = new boost::math::barycentric_rational<double>( t.data(), z.data(), n);
+}  // end ctor
+
 
 
 RangedScalarDistribution::~RangedScalarDistribution()
@@ -137,8 +230,14 @@ RangedScalarDistribution::~RangedScalarDistribution()
 
 
 double RangedScalarDistribution::mval( double t) const { return (*_minterp)(t);}
-double RangedScalarDistribution::zval( double t) const { return (*_zinterp)(t);}
+double RangedScalarDistribution::zval( double t) const { return _hasz ? (*_zinterp)(t) : 0;}
 
 
-double RangedScalarDistribution::zscore( double t, double x) const { return (x - (*_minterp)(t))/(*_zinterp)(t);}
+double RangedScalarDistribution::zscore( double t, double x) const
+{
+    double zval = (*_zinterp)(t);
+    if ( zval <= 0.0)
+        return 0.0;
+    return (x - (*_minterp)(t))/zval;
+}   // end zscore
 
