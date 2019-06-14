@@ -37,8 +37,6 @@ set( INCLUDE_FILES
     #"${INCLUDE_DIR}/ThreadManager.h"
     "${INCLUDE_DIR}/Timer.h"
     "${INCLUDE_DIR}/ustring.h"
-    "${INCLUDE_DIR}/UndoStack.h"
-    "${INCLUDE_DIR}/template/UndoStack_template.h"
     "${INCLUDE_DIR}/Vectors.h")
 
 set( SRC_FILES

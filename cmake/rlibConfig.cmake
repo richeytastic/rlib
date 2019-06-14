@@ -32,4 +32,4 @@ set( rlib_LIBRARIES     ${rlib_LIBRARIES}         CACHE FILE "The rlib imported 
 
 # handle QUIETLY and REQUIRED args and set rlib_FOUND to TRUE if all listed variables are TRUE
 include( "${CMAKE_ROOT}/Modules/FindPackageHandleStandardArgs.cmake")
-find_package_handle_standard_args( rlib "Found:\t${rlib_LIBRARIES}" rlib_LIBRARIES rlib_INCLUDE_DIRS)
+find_package_handle_standard_args( rlib rlib_FOUND rlib_LIBRARIES rlib_INCLUDE_DIRS)
