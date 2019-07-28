@@ -142,6 +142,38 @@ std::istream& rlib::operator>>( std::istream& is, Vec_3DP& dvec)
 }   // end operator>>
 
 
+RangedScalarDistribution::Ptr RangedScalarDistribution::average( const std::vector<DP>& trng, const std::vector<RangedScalarDistribution::CPtr>& rsds)
+{
+    Vec_3DP dvec;
+
+    for ( double t : trng)
+    {
+        DP m = 0;   // Sum of means
+        DP s = 0;   // Sum of variances
+        int n = 0;  // Number of distributions to average over at point t.
+        for ( const CPtr& rsd : rsds)
+        {
+            // Distribution in range?
+            if ( rsd->tmin() <= t && rsd->tmax() >= t)
+            {
+                n++;
+                m += rsd->mval(t);
+                s += pow(rsd->zval(t),2);   // Square to get variance
+            }   // end if
+        }   // end for
+
+        if ( n > 0)
+        {
+            m /= n;
+            DP z = sqrt(s/n);
+            dvec.push_back({t, m, z});
+        }   // end if
+    }   // end for
+
+    return create(dvec);
+}   // end average
+
+
 RangedScalarDistribution::RangedScalarDistribution( const Vec_3DP& d)
     : _minterp( nullptr), _zinterp(nullptr), _tmin(0), _tmax(0), _hasz(true)
 {

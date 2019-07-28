@@ -49,6 +49,7 @@ class rlib_EXPORT RangedScalarDistribution
 {
 public:
     using Ptr = std::shared_ptr<RangedScalarDistribution>;
+    using CPtr = std::shared_ptr<const RangedScalarDistribution>;
 
     // Create a new distribution from the given vector of triples {t,m,z} that
     // specify the independent variable t, the mean of the distribution at t, and
@@ -57,6 +58,12 @@ public:
     static Ptr create( const Vec_3DP&);
     static Ptr create( const Vec_2DP&);
     static Ptr create( const Vec_1DP&);
+
+    // Create a new distribution from the combined average of the given distributions over ascending
+    // independent points trng. The returned distribution ranges over these values as an average
+    // distribution of those distributions having elements of trng in their domain.
+    // This function naturally assumes that all of the distributions being combined are independent.
+    static Ptr average( const std::vector<DP>& trng, const std::vector<CPtr>&);
 
     // Create from a data file which must have a row for each sample point.
     // Rows can be triples, doubles, or single values with values on a row separated by
