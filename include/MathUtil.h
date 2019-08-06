@@ -31,6 +31,8 @@ namespace rlib {
 // On return, dy is the error estimate. This function taken from "Numerical Recipies in C++" 2nd edition, p113.
 rlib_EXPORT DP polint( const Vec_DP& xa, const Vec_DP& ya, DP x, DP& dy);
 
+rlib_EXPORT DP round( DP v, size_t nd);
+
 }   // end namespace
 
 #endif
