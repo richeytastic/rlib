@@ -19,6 +19,7 @@
 #define RLIB_MATH_UTIL_H
 
 #include "NewtonRaphson.h"
+#include <cstddef>
 #include <vector>
 
 using DP = double;

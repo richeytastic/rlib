@@ -28,7 +28,7 @@ include( "${CMAKE_CURRENT_LIST_DIR}/Macros.cmake")
 get_library_suffix( _lsuff)
 set( _hints rlib${_lsuff} librlib${_lsuff})
 find_library( rlib_LIBRARIES NAMES ${_hints} PATHS "${rlib_LIBRARY_DIR}/static" "${rlib_LIBRARY_DIR}")
-set( rlib_LIBRARIES     ${rlib_LIBRARIES}         CACHE FILE "The rlib imported libraries to link to.")
+set( rlib_LIBRARIES     ${rlib_LIBRARIES}         CACHE FILEPATH "The rlib imported libraries to link to.")
 
 # handle QUIETLY and REQUIRED args and set rlib_FOUND to TRUE if all listed variables are TRUE
 include( "${CMAKE_ROOT}/Modules/FindPackageHandleStandardArgs.cmake")

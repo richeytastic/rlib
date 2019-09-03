@@ -81,8 +81,10 @@ DP rlib::polint( const Vec_DP& xa, const Vec_DP& ya, const DP x, DP& dy)
 }   // end polint
 
 
-DP rlib::round( DP v, size_t nd)
+double rlib::round( double x, size_t ndp)
 {
-    const DP mult = pow(10,nd);
-    return floor( v * mult + 0.5) / mult;
+    const double E = pow(10,ndp);
+    const double y = double(long(x));
+    const double z = double(long((x-y)*E + 0.5));
+    return y + z/E;
 }   // end round
