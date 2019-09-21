@@ -72,7 +72,7 @@ size_t SymmetricMatrix<T>::byteSize() const
 
 
 template <typename R>
-rlib_EXPORT ostream &operator<<( ostream &os, const SymmetricMatrix<R> &sm)
+std::ostream &operator<<( std::ostream &os, const SymmetricMatrix<R> &sm)
 {
     const int &sz = sm.sz;
     const size_t w = sm.width;

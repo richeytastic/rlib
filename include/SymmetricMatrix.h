@@ -15,17 +15,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#pragma once
 #ifndef RLIB_SYMMETRIC_MATRIX_H
 #define RLIB_SYMMETRIC_MATRIX_H
 
-typedef unsigned int uint;
+using uint = unsigned int;
 #include <ostream>
-using std::ostream;
 #include <iomanip>
 
-namespace rlib
-{
+namespace rlib {
 
 template <typename T>
 class SymmetricMatrix
@@ -56,10 +53,10 @@ private:
     uint calcBufferIdx( uint, uint, uint) const;
 
     template <typename R>
-    friend ostream &operator<<( ostream &os, const SymmetricMatrix<R> &sm);
+    friend std::ostream &operator<<( std::ostream &os, const SymmetricMatrix<R> &sm);
 };  // end class
 
-#include "template/SymmetricMatrix_template.h"
+#include "template/SymmetricMatrix_template.cpp"
 
 }   // end namespace
 

@@ -46,7 +46,7 @@ template <typename T>
 T cnv( const char* txt);
 
 
-#include "template/Convert_template.h"
+#include "template/Convert_template.cpp"
 
 }   // end rlib
 

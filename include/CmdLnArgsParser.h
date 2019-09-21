@@ -30,8 +30,7 @@
 #include <cassert>
 #include <boost/unordered_map.hpp>
 
-namespace rlib
-{
+namespace rlib {
 
 class CmdLnArgsParser;  // For friend declaration
 
@@ -81,6 +80,6 @@ private:
 std::ostream& operator<<( std::ostream&, const rlib::SwitchArgs&);
 
 
-#include "../include/template/CmdLnArgsParser_template.h"
+#include "../include/template/CmdLnArgsParser_template.cpp"
 
 #endif
