@@ -15,39 +15,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#ifndef RLIB_UNDO_STACK_H
-#define RLIB_UNDO_STACK_H
+#ifndef RLIB_SYMMETRIC_MATRIX_H
+#define RLIB_SYMMETRIC_MATRIX_H
 
-#include <cstdlib>
-#include <cassert>
+using uint = unsigned int;
+#include <ostream>
+#include <iomanip>
 
-namespace RLIB {
+namespace rlib {
 
 template <typename T>
-class UndoStack
+class SymmetricMatrix
 {
 public:
-    UndoStack( const T& initial, size_t maxSize=30);
-    ~UndoStack();
+    SymmetricMatrix( size_t sz, size_t width=3);
+    virtual ~SymmetricMatrix();
 
-    void push( const T&);   // Push an item onto the undo stack to undo to
+    inline size_t size() const { return sz;}
+    T get( uint i, uint j) const;
+    void set( uint i, uint j, T val);
 
-    bool canUndo() const;
-    bool canRedo() const;
+    inline void setElementPrintWidth( size_t w)
+    {
+        width = w;
+        if ( width < 1)
+            width = 1;
+    }   // end setElementPrintWidth
 
-    const T& undo();
-    const T& redo();
+    // Returns the number of bytes used to store this matrix.
+    size_t byteSize() const;
 
 private:
-    const T _original;
-    const size_t _maxSz;
-    struct UNode;
-    UNode* _undos;
-    UNode* _cur;
-    size_t _count;
+    size_t sz;
+    T *buffer;
+    size_t width;   // Width of matrix elements when printed
+
+    uint calcBufferIdx( uint, uint, uint) const;
+
+    template <typename R>
+    friend std::ostream &operator<<( std::ostream &os, const SymmetricMatrix<R> &sm);
 };  // end class
 
-#include "template/UndoStack_template.h"
+#include "SymmetricMatrix.cpp"
 
 }   // end namespace
 

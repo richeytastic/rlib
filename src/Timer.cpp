@@ -21,17 +21,19 @@ using rlib::Timer;
 #include <cassert>
 
 
-Timer::Timer( const std::string &t, std::ostream &o) : _tag(t), _os(&o)
+Timer::Timer( const std::string &t, std::ostream &o) : _tag(t), _os(&o), _tv0( clock())
 {
-    _tv0 = clock();
 }   // end ctor
 
 
 Timer::~Timer()
 {
-    const clock_t dur = clock() - _tv0;
-    const double secs = double(dur)/CLOCKS_PER_SEC;
-    const double msecs = secs * 1000; // Millisecs
-    *_os << "[ " << _tag << " : " << msecs << " msecs]" << std::endl;
+    const double secs = double(clock() - _tv0)/CLOCKS_PER_SEC;
+    const int wsecs = int(secs);
+    const int msecs = int((secs - wsecs) * 1000.0); // Millisecs
+    if ( wsecs > 0)
+        *_os << "[ " << _tag << " : " << wsecs << "." << msecs << " secs ]" << std::endl;
+    else
+        *_os << "[ " << _tag << " : " << msecs << " msecs ]" << std::endl;
 }  // end dtor
 

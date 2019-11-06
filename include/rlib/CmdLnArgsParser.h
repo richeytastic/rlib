@@ -80,6 +80,6 @@ private:
 std::ostream& operator<<( std::ostream&, const rlib::SwitchArgs&);
 
 
-#include "../include/template/CmdLnArgsParser_template.cpp"
+#include "CmdLnArgsParser.cpp"
 
 #endif
