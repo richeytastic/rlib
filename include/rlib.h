@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2017 Richard Palmer
+ * Copyright (C) 2019 Richard Palmer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,30 +15,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#include "stdafx.h"
 #include <string>
 #include <algorithm>
 #include <iostream>
 
-#include "rlib/Vec.h"
-#include "rlib/Vec2d.h"
-#include "rlib/Vectors.h"
-#include "rlib/Lock.h"
-#include "rlib/ThreadManager.h"
-#include "rlib/ThreadSafeQueue.h"
-#include "rlib/Pack.h"
-#include "rlib/ustring.h"
+#include "rlib/ConvexOptimiser.h"
+#include "rlib/Convert.h"
+#include "rlib/CmdLnArgsParser.h"
 #include "rlib/CpuTimer.h"
-#include "rlib/Model.h"
-#include "rlib/ParseXFile.h"
-#include "rlib/Scene.h"
-#include "rlib/BmpImage.h"
-#include "rlib/DataReader.h"
-#include "rlib/ModelData.h"
-#include "rlib/ProgressUpdater.h"
-#include "rlib/FileIO.h"
-#include "rlib/HttpClient.h"
-#include "rlib/ImageParsing.h"
-#include "rlib/Compression.h"
 #include "rlib/Exceptions.h"
-#include "rlib/Logger.h"
+#include "rlib/FileIO.h"
+#include "rlib/LinearRegressor.h"
+#include "rlib/MathUtil.h"
+#include "rlib/Memory.h"
+#include "rlib/NewtonRaphson.h"
+#include "rlib/Pack.h"
+#include "rlib/Profiling.h"
+#include "rlib/ProgressDelegate.h"
+#include "rlib/ProgressUpdater.h"
+#include "rlib/Random.h"
+#include "rlib/RangedScalarDistribution.h"
+#include "rlib/Round.h"
+#include "rlib/SymmetricBitSet.h"
+#include "rlib/SymmetricMatrix.h"
+#include "rlib/Timer.h"
+#include "rlib/Vectors.h"

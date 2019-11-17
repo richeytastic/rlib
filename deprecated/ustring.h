@@ -15,7 +15,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  ************************************************************************/
 
-#pragma once
 #ifndef RLIB_USTRING_H
 #define RLIB_USTRING_H
 
@@ -31,9 +30,7 @@ using std::basic_string;
 typedef unsigned char uchar;
 typedef unsigned int uint;
 
-
-namespace rlib
-{
+namespace rlib {
 
 class rlib_EXPORT ustring
 {
