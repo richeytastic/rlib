@@ -59,7 +59,7 @@ public:
         idx[0]++;   // Increment row for new measurement
 
         // Ensure timings table large enough
-        _timings.conservativeResize( std::max<int>( _timings.rows(), idx[0]+1), _col);
+        _timings.conservativeResize( std::max<int>( int(_timings.rows()), idx[0]+1), _col);
         _timings(idx[0], idx[1]) = t;   // Record the start time
         _activeSplits[nm] = true;       // Set this split active
     }   // end startSplit

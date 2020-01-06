@@ -14,7 +14,6 @@ include_directories( ${INCLUDE_F})
 
 set( INCLUDE_FILES
     "${INCLUDE_F}.h"
-    "${INCLUDE_F}/CmdLnArgsParser.h"
     "${INCLUDE_F}/Convert.h"
     "${INCLUDE_F}/ConvexOptimiser.h"
     "${INCLUDE_F}/CpuTimer.h"
@@ -37,7 +36,6 @@ set( INCLUDE_FILES
     "${INCLUDE_F}/Vectors.h")
 
 set( SRC_FILES
-    ${SRC_DIR}/CmdLnArgsParser
     ${SRC_DIR}/Convert
     ${SRC_DIR}/ConvexOptimiser
     ${SRC_DIR}/CpuTimer
