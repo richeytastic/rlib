@@ -20,26 +20,31 @@
 
 #include "rlib_Export.h"
 #include <cstdlib>
+#include <cstdint>
+
+#ifdef _WIN32
+using u_int64_t = uint_least64_t;
+#endif
 
 namespace rlib {
 
 /**
  * Returns the size of physical memory (RAM) in bytes.
  */
-rlib_EXPORT size_t getMemorySize();
+rlib_EXPORT u_int64_t getMemorySize();
 
 
 /**
  * Returns maximum so far resident set size (physical memory use) in
  * bytes or zero if the value cannot be determined for this OS.
  */
-rlib_EXPORT size_t getPeakRSS();
+rlib_EXPORT u_int64_t getPeakRSS();
 
 /**
  * Returns the current resident set size (physical memory use in
  * bytes or zero if the value cannot be determined for this OS.
  */
-rlib_EXPORT size_t getCurrentRSS();
+rlib_EXPORT u_int64_t getCurrentRSS();
 
 }	// end namespace
 
