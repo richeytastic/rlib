@@ -30,6 +30,7 @@ set( INCLUDE_FILES
     "${INCLUDE_F}/Random.h"
     "${INCLUDE_F}/RangedScalarDistribution.h"
     "${INCLUDE_F}/Round.h"
+    "${INCLUDE_F}/StringUtil.h"
     "${INCLUDE_F}/SymmetricBitSet.h"
     "${INCLUDE_F}/SymmetricMatrix.h"
     "${INCLUDE_F}/Timer.h"
@@ -50,6 +51,7 @@ set( SRC_FILES
     ${SRC_DIR}/ProgressUpdater
     ${SRC_DIR}/Random
     ${SRC_DIR}/RangedScalarDistribution
+    ${SRC_DIR}/StringUtil
     ${SRC_DIR}/SymmetricBitSet
     ${SRC_DIR}/Timer
     ${SRC_DIR}/Vectors
