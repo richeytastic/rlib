@@ -26,6 +26,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <boost/filesystem.hpp>
 
 namespace rlib {
 
@@ -37,6 +38,13 @@ rlib_EXPORT bool isValidDir( const std::string &dname);
  * returns the empty string.
  */
 rlib_EXPORT std::string findFile( const std::string &dname, const std::string& fext);
+
+/**
+ * Copy the source directory recursively (all files and folders) to the destination directory.
+ * If overwrite_if_exist is true, files with matching filenames will be overwritten.
+ * Returns true on success.
+ */
+rlib_EXPORT bool copyDir( const boost::filesystem::path &src, const boost::filesystem::path &dst, bool overwrite_if_exist=true);
 
 /**
  * Return a list of all regular files at a given file system location.

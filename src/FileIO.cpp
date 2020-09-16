@@ -23,16 +23,12 @@
 #include <sstream>
 #include <boost/regex.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem/operations.hpp>
-
+namespace BFS = boost::filesystem;
 
 /**
  * Returns true if and only if the provided directory is valid and readable.
  */
-bool rlib::isValidDir( const std::string &dname)
-{
-   return boost::filesystem::is_directory( dname);
-}  // end isValidDir
+bool rlib::isValidDir( const std::string &dname) { return BFS::is_directory( dname);}
 
 
 std::string rlib::findFile( const std::string &dname, const std::string &xt)
@@ -56,12 +52,12 @@ std::list<std::string> rlib::getFilenames( const std::string &fsLocation)
 {
     std::list<std::string> files;
 
-    if ( boost::filesystem::is_directory( fsLocation))
+    if ( BFS::is_directory( fsLocation))
     {
         const std::string filter(".+");
         files = getDirectoryFiles( fsLocation, filter);
     }  // end if
-    else if ( boost::filesystem::is_regular_file( fsLocation) || boost::filesystem::is_symlink( fsLocation))
+    else if ( BFS::is_regular_file( fsLocation) || BFS::is_symlink( fsLocation))
         files.push_back( fsLocation);
 
     return files;
@@ -73,13 +69,13 @@ std::list<std::string> rlib::getDirectoryFiles( const std::string &dir, const st
 {
     std::list<std::string> files;
 
-    if ( boost::filesystem::is_directory( dir))
+    if ( BFS::is_directory( dir))
     {
         boost::regex rgexfilter( filter);
-        boost::filesystem::directory_iterator end_itr;   // Default constructor is a generic "past-the-end" iterator
-        for ( boost::filesystem::directory_iterator itr( dir); itr != end_itr; ++itr)
+        BFS::directory_iterator end_itr;   // Default constructor is a generic "past-the-end" iterator
+        for ( BFS::directory_iterator itr( dir); itr != end_itr; ++itr)
         {
-            if ( boost::filesystem::is_regular_file( itr->status()))  // Not a directory
+            if ( BFS::is_regular_file( itr->status()))  // Not a directory
             {
                 // Store filename if match is found on the filter
                 boost::smatch what;
@@ -98,7 +94,7 @@ std::string rlib::getExtension( const std::string& fname)
 {
     std::string fname2 = fname;
     boost::algorithm::trim(fname2);
-    boost::filesystem::path p( fname2);
+    BFS::path p( fname2);
     if ( !p.has_extension())    // No extension
         return "";
 
@@ -173,3 +169,47 @@ int rlib::readFlatFile( const std::string& fname, std::vector<rlib::StringVec> &
     oss << delim;
     return readFlatFile( fname, lines, oss.str(), skipp);
 }   // end readFlatFile
+
+
+bool rlib::copyDir( const BFS::path &src, const BFS::path &dst, bool clobber)
+{
+    try
+    {
+        // Check that the source is a directory
+        if ( !BFS::exists(src) || !BFS::is_directory(src))
+            return false;
+
+        // Create the destination directory if it doesn't already exist
+        if ( !BFS::exists(dst) && !BFS::create_directory(dst))
+            return false;
+    }   // end try
+    catch ( const BFS::filesystem_error &e)
+    {
+        std::cerr << e.what() << std::endl;
+        return false;
+    }   // end catch
+
+    const auto copyOption = clobber ? BFS::copy_option::overwrite_if_exists : BFS::copy_option::none;
+
+    for ( BFS::directory_iterator file(src); file != BFS::directory_iterator(); ++file)
+    {
+        try
+        {
+            BFS::path current( file->path());
+            if ( BFS::is_directory(current))
+            {
+                if ( !copyDir( current, dst / current.filename()))
+                    return false;
+            }   // end if
+            else
+                BFS::copy_file( current, dst / current.filename(), copyOption);
+
+        }   // end try
+        catch ( const BFS::filesystem_error &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }   // end for
+    }   // end for
+
+    return true;
+}   // end copyDir
