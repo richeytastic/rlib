@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2017 Richard Palmer
+ * Copyright (C) 2020 Richard Palmer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -213,3 +213,51 @@ bool rlib::copyDir( const BFS::path &src, const BFS::path &dst, bool clobber)
 
     return true;
 }   // end copyDir
+
+
+namespace {
+bool _createDir( const BFS::path &pth)
+{
+    boost::system::error_code ec;
+    BFS::create_directory( pth, ec); // If already exists, returns false (not an error)
+    return !ec.failed();
+}   // end _createDir
+
+
+bool _rename( const BFS::path &src, const BFS::path &dst)
+{
+    boost::system::error_code ec;
+    BFS::rename( src, dst, ec);
+    return !ec.failed();
+}   // end _rename
+}   // end namespace
+
+
+bool rlib::moveFiles( const BFS::path &src, const BFS::path &dst, const BFS::path &bck)
+{
+    bool ok = true;
+    if ( BFS::is_directory(src))
+    {
+        ok = _createDir( dst);
+        ok = _createDir( bck);
+        if ( ok)
+        {
+            for ( BFS::directory_iterator file(src); file != BFS::directory_iterator(); ++file)
+            {
+                const BFS::path nm = BFS::path( file->path()).filename();
+                if ( !(ok = moveFiles( src / nm, dst / nm, bck / nm)))
+                    break;
+            }   // end for
+            if ( ok)
+                ok = BFS::remove(src);
+        }   // end if
+    }   // end if
+    else
+    {
+        if ( BFS::exists(dst))
+            ok = _rename( dst, bck);
+        if ( ok)
+            ok = _rename( src, dst);
+    }   // end else
+    return ok;
+}   // end moveFiles

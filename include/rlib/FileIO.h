@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2017 Richard Palmer
+ * Copyright (C) 2020 Richard Palmer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,6 +45,14 @@ rlib_EXPORT std::string findFile( const std::string &dname, const std::string& f
  * Returns true on success.
  */
 rlib_EXPORT bool copyDir( const boost::filesystem::path &src, const boost::filesystem::path &dst, bool overwrite_if_exist=true);
+
+/**
+ * Recursively move files and directories from src to dst placing any existing destination files
+ * into the given backup location (bck). Returns true on successful move of src files to dst and
+ * the files at the backup location may be discarded. If false is returned, call again with the
+ * src and bck parameters swapped to effect restoration.
+ */
+rlib_EXPORT bool moveFiles( const boost::filesystem::path &src, const boost::filesystem::path &dst, const boost::filesystem::path &bck);
 
 /**
  * Return a list of all regular files at a given file system location.
