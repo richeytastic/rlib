@@ -22,6 +22,7 @@ set( INCLUDE_FILES
     "${INCLUDE_F}/LinearRegressor.h"
     "${INCLUDE_F}/MathUtil.h"
     "${INCLUDE_F}/Memory.h"
+    "${INCLUDE_F}/MultiLock.h"
     "${INCLUDE_F}/NewtonRaphson.h"
     "${INCLUDE_F}/Pack.h"
     "${INCLUDE_F}/Profiling.h"
@@ -45,6 +46,7 @@ set( SRC_FILES
     ${SRC_DIR}/LinearRegressor
     ${SRC_DIR}/MathUtil
     ${SRC_DIR}/Memory
+    ${SRC_DIR}/MultiLock
     ${SRC_DIR}/NewtonRaphson
     ${SRC_DIR}/Pack
     ${SRC_DIR}/ProgressDelegate
