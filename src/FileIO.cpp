@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2020 Richard Palmer
+ * Copyright (C) 2021 Richard Palmer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,8 +19,11 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <cstdlib>
+#include <cstdio>
 #include <boost/regex.hpp>
 #include <boost/algorithm/string.hpp>
 namespace BFS = boost::filesystem;
@@ -261,3 +264,42 @@ bool rlib::moveFiles( const BFS::path &src, const BFS::path &dst, const BFS::pat
     }   // end else
     return ok;
 }   // end moveFiles
+
+
+char *rlib::readBinaryFile( const std::string &fpath, size_t &nbytes, size_t READSZ)
+{
+    FILE *fp = std::fopen( fpath.c_str(), "rb");
+    if ( !fp)
+        return nullptr;
+
+    char *buffr = nullptr;
+    nbytes = 0;
+    size_t nr = 0;
+    do
+    {
+        nr = 0;
+        char *oldbuffr = buffr;
+        buffr = (char*)std::realloc( (void*)buffr, nbytes + READSZ);
+        if ( buffr)
+        {
+            nr = std::fread( (void*)&buffr[nbytes], 1, READSZ, fp);   // Returns num bytes read
+            nbytes += nr;
+        }   // end if
+        else
+        {
+            std::cerr << "[ERROR] rlib::FileIO::readBinaryFile: memory allocation failed!" << std::endl;
+            std::free(oldbuffr);
+        }   // end else
+    } while (nr == READSZ);
+
+    // If not EOF then error
+    if ( !std::feof( fp))
+    {
+        std::cerr << "[ERROR] rlib::FileIO::readBinaryFile: EOF not reached!" << std::endl;
+        std::free(buffr);
+        buffr = nullptr;
+    }   // end if
+
+    std::fclose(fp);
+    return buffr;
+}   // end readBinaryFile

@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2020 Richard Palmer
+ * Copyright (C) 2021 Richard Palmer
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,6 +86,11 @@ using StringVec = std::vector<std::string>;
 // Empty lines are skipped. Set skippound true to skip lines starting with #.
 rlib_EXPORT int readFlatFile( const std::string& fname, std::vector<StringVec>& lines, std::string delims="|,\t", bool skippound=false);
 rlib_EXPORT int readFlatFile( const std::string& fname, std::vector<StringVec>& lines, char delim, bool skippound=false);
+
+// C-style read of binary data into returned array which should be free'd after use. The size of the
+// returned array is nbytes. Tries to read in and allocate memory in READSZ byte chunks. On error
+// a null pointer is returned.
+rlib_EXPORT char* readBinaryFile( const std::string &fname, size_t &nbytes, const size_t READSZ=256);
 
 }   // end namespace
 
