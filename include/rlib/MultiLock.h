@@ -47,7 +47,7 @@ public:
     // Use the given key. Key is discarded from being available to
     // use again if discardKey is set true. Will not necessarily
     // unlock if there are remaining keys still locking.
-    void turnkey( int key, bool discardKey=false);
+    void turnKey( int key, bool discardKey=false);
 
     inline bool isLocked() const { return !_locks.empty();}
 

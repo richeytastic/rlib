@@ -57,9 +57,9 @@ bool MultiLock::lock( int key)
 }   // end lock
 
 
-void MultiLock::turnkey( int key, bool dkey)
+void MultiLock::turnKey( int key, bool dkey)
 {
     _locks.erase(key);
     if ( dkey && _keys.count(key) > 0)
         _keys.erase(key);
-}   // end turnkey
+}   // end turnKey
