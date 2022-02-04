@@ -38,27 +38,26 @@ set( INCLUDE_FILES
     "${INCLUDE_F}/Vectors.h")
 
 set( SRC_FILES
-    ${SRC_DIR}/Convert
-    ${SRC_DIR}/ConvexOptimiser
-    ${SRC_DIR}/CpuTimer
-    ${SRC_DIR}/Exceptions
-    ${SRC_DIR}/FileIO
-    ${SRC_DIR}/LinearRegressor
-    ${SRC_DIR}/MathUtil
-    ${SRC_DIR}/Memory
-    ${SRC_DIR}/MultiLock
-    ${SRC_DIR}/NewtonRaphson
-    ${SRC_DIR}/Pack
-    ${SRC_DIR}/ProgressDelegate
-    ${SRC_DIR}/ProgressUpdater
-    ${SRC_DIR}/Random
-    ${SRC_DIR}/RangedScalarDistribution
-    ${SRC_DIR}/StringUtil
-    ${SRC_DIR}/SymmetricBitSet
-    ${SRC_DIR}/Timer
-    ${SRC_DIR}/Vectors
+    "${SRC_DIR}/Convert.cpp"
+    "${SRC_DIR}/ConvexOptimiser.cpp"
+    "${SRC_DIR}/CpuTimer.cpp"
+    "${SRC_DIR}/Exceptions.cpp"
+    "${SRC_DIR}/FileIO.cpp"
+    "${SRC_DIR}/LinearRegressor.cpp"
+    "${SRC_DIR}/MathUtil.cpp"
+    "${SRC_DIR}/Memory.cpp"
+    "${SRC_DIR}/MultiLock.cpp"
+    "${SRC_DIR}/NewtonRaphson.cpp"
+    "${SRC_DIR}/Pack.cpp"
+    "${SRC_DIR}/ProgressDelegate.cpp"
+    "${SRC_DIR}/ProgressUpdater.cpp"
+    "${SRC_DIR}/Random.cpp"
+    "${SRC_DIR}/RangedScalarDistribution.cpp"
+    "${SRC_DIR}/StringUtil.cpp"
+    "${SRC_DIR}/SymmetricBitSet.cpp"
+    "${SRC_DIR}/Timer.cpp"
+    "${SRC_DIR}/Vectors.cpp"
     )
 
 add_library( ${PROJECT_NAME} ${SRC_FILES} ${INCLUDE_FILES})
-
 include( "cmake/LinkLibs.cmake")
