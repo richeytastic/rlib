@@ -195,8 +195,8 @@ RangedScalarDistribution::RangedScalarDistribution( const Vec_3DP& d)
 
     _tmin = t[0];
     _tmax = t[n-1];
-    _minterp = new boost::math::barycentric_rational<double>( t.data(), m.data(), n);
-    _zinterp = new boost::math::barycentric_rational<double>( t.data(), z.data(), n);
+    _minterp = new boost::math::interpolators::barycentric_rational<double>( t.data(), m.data(), n);
+    _zinterp = new boost::math::interpolators::barycentric_rational<double>( t.data(), z.data(), n);
 }  // end ctor
 
 
@@ -221,8 +221,8 @@ RangedScalarDistribution::RangedScalarDistribution( const Vec_2DP& d)
 
     _tmin = t[0];
     _tmax = t[n-1];
-    _minterp = new boost::math::barycentric_rational<double>( t.data(), m.data(), n);
-    _zinterp = new boost::math::barycentric_rational<double>( t.data(), z.data(), n);
+    _minterp = new boost::math::interpolators::barycentric_rational<double>( t.data(), m.data(), n);
+    _zinterp = new boost::math::interpolators::barycentric_rational<double>( t.data(), z.data(), n);
 }  // end ctor
 
 
@@ -248,8 +248,8 @@ RangedScalarDistribution::RangedScalarDistribution( const Vec_1DP& d)
 
     _tmin = t[0];
     _tmax = t[n-1];
-    _minterp = new boost::math::barycentric_rational<double>( t.data(), m.data(), n);
-    _zinterp = new boost::math::barycentric_rational<double>( t.data(), z.data(), n);
+    _minterp = new boost::math::interpolators::barycentric_rational<double>( t.data(), m.data(), n);
+    _zinterp = new boost::math::interpolators::barycentric_rational<double>( t.data(), z.data(), n);
 }  // end ctor
 
 

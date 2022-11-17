@@ -1,5 +1,5 @@
 /************************************************************************
- * Copyright (C) 2017 Richard Palmer.
+ * Copyright (C) 2022 Richard Palmer.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,7 +103,7 @@ public:
 
 private:
     Vec_3DP _dvec;
-    boost::math::barycentric_rational<DP> *_minterp, *_zinterp;
+    boost::math::interpolators::barycentric_rational<DP> *_minterp, *_zinterp;
     DP _tmin, _tmax;
     bool _hasz;
 
