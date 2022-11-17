@@ -192,7 +192,7 @@ bool rlib::copyDir( const BFS::path &src, const BFS::path &dst, bool clobber)
         return false;
     }   // end catch
 
-    const auto copyOption = clobber ? BFS::copy_option::overwrite_if_exists : BFS::copy_option::none;
+    const auto copyOption = clobber ? BFS::copy_options::overwrite_existing : BFS::copy_options::none;
 
     for ( BFS::directory_iterator file(src); file != BFS::directory_iterator(); ++file)
     {
